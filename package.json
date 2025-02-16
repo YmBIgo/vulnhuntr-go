@@ -1,0 +1,25 @@
+{
+  "name": "vulnhuntr-go",
+  "version": "1.0.0",
+  "description": "vulnhuntr port for golang",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node ./src/index.ts",
+    "check": "ts-node ./src/check.ts"
+  },
+  "keywords": [
+    "go"
+  ],
+  "author": "kazuya kurihara",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.13.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "xmlbuilder": "^15.1.1"
+  }
+}
