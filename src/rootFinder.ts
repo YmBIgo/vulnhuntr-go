@@ -36,6 +36,20 @@ export class RootFinder {
             /Put\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\(([a-zA-Z0-9.]+)\)\s*\)/g,
             /Trace\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\(([a-zA-Z0-9.]+)\)\s*\)/g,
             /NotFound\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\(([a-zA-Z0-9.]+)\)\s*\)/g,
+            // http 1行の関数の場合
+            /Mount\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Handle\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /HandleFunc\(\s*"[a-zA-Z0-9\/_-\{\}#]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Connect\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Delete\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Get\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Head\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Options\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Patch\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Post\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Put\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /Trace\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
+            /NotFound\(\s*"[a-zA-Z0-9\/_-\{\}]+"\s*,\s*([a-zA-Z0-9.]+)\s*\)/g,
         ]
             // chi 複数行の関数の場合 {}
         const multiLinePatterns = [
@@ -71,12 +85,12 @@ export class RootFinder {
                     const lastFuncNameArray = matchResult[1].split(".")
                     const lastFuncName = lastFuncNameArray[lastFuncNameArray.length - 1]
                     const notLastFuncName = lastFuncNameArray.slice(0, -1)
-                    if (cacheResult.find((r) => r === lastFuncName)) return
+                    if (cacheResult.find((r) => r === lastFuncName)) continue
                     const searchFileContent = {
                         rootPath: this.rootPath,
                         filePath: this.filePath,
                         funcName: lastFuncName,
-                        funcBeforeWords: beforeWords + notLastFuncName.join(".") + "."
+                        funcBeforeWords: beforeWords + notLastFuncName.join(".") + (lastFuncNameArray.length > 1 ? "." : "")
                     }
                     searchFileArray.push(searchFileContent)
                     cacheResult.push(lastFuncName)

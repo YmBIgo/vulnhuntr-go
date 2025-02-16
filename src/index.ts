@@ -73,7 +73,10 @@ function generateUuid() {
 }
 
 async function main() {
-    const outputPath = "/Users/coffeecup/Desktop/Codes/vulnhuntr-go"
+    // const outputPath = "/Users/coffeecup/Desktop/Codes/vulnhuntr-go/note-go"
+    // const rootFile = "/Users/coffeecup/Documents/programming/Go/chinesenotes-go/cnweb.go"
+    // const rootPath = "/Users/coffeecup/Documents/programming/Go/chinesenotes-go"
+    const outputPath = "/Users/coffeecup/Desktop/Codes/vulnhuntr-go/65diary"
     const rootFile = "/Users/coffeecup/Documents/work/65diary/backend/application.go"
     const rootPath = "/Users/coffeecup/Documents/work/65diary/backend"
     const rootFinder = new RootFinder(rootPath, rootFile)
@@ -113,7 +116,7 @@ async function main() {
                 let codeDefinitions: string[] = []
                 let currentFile = filePath
                 let prevCurrentFiles: string[] = [filePath]
-                for (let i = 0; i < 7; i++) {
+                for (let i = 0; i < 10; i++) {
                     if (i === 0) {
                         for (let ctx of firstReportJson.context_code) {
                             if (!Object.keys(storedCodeDefinition).includes(ctx.name)) {
