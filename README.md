@@ -15,9 +15,9 @@ However this POC is implemented using only in python.
 Therefore I decided to port this project using Go language.  
   
 > [!CAUTION]
-> This project is still work in progress and is accessing and evaluating.
-> We only support `chi` and `http`
-> Please use as educational or security research purposes only.
+> This project is still work in progress and is accessing and evaluating.  
+> We only support `chi` and `http`  
+> Please use as educational or security research purposes only.  
 
 # Features
 
@@ -41,7 +41,7 @@ git clone https://github.com/YmBIgo/vulnhuntr-go.git
 ```
 export CLAUDE_API_KEY=your-api-key
 ```
-5. Modify file paths in src/index.ts
+5. Modify file paths in src/index.ts  
  `outputPath` for folder which you want report json to be outputted.  
  `rootFile` for file which define routing.  
  `rootPath` for folder which is root of your go project  
