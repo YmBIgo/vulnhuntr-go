@@ -1,4 +1,4 @@
-Go Implementation of [Vulnhuntr](https://github.com/protectai/vulnhuntr/tree/main?tab=readme-ov-file)  
+Go Implementation of [Vulnhuntr](https://github.com/protectai/vulnhuntr/tree/main?tab=readme-ov-file) using TypeScript  
 A tool to find vulnerabilities using LLM and static code analysis.
 
 ![vulnhuntr-go-image](https://vulnhuntr.s3.us-west-1.amazonaws.com/vulnhuntr_title.png)
@@ -12,10 +12,10 @@ In 2024/10/19, Protect AI a cyber security company, revealed "[Vulnhuntr: Autono
 Autonomous security detection is suffered from "false positives in static code analysis" and "lack of context information in LLM", However surprisingly Vulnhuntr overcame These two flaws, by combining both static code analysis and LLM.  
   
 However this POC is implemented using only in python.  
-Therefore I decided to port this project using Go language.  
+Therefore I decided to port this project aiming for Go language using TypeScript.  
   
 > [!CAUTION]
-> This project is still work in progress and is accessing and evaluating.  
+> This project is still work in progress and is assessing and evaluating.  
 > We only support `chi` and `http`  
 > Please use as educational or security research purposes only.  
 
