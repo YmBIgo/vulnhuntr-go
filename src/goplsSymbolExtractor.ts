@@ -7,7 +7,13 @@ const promisifyExec = util.promisify(exec)
 
 // get symbol position in specified file
 async function getSymbolPosition(filePath: string, funcName: string, funcBeforeWords: string): Promise<[number, number]> {
-    const fileContent = (await fs.readFile(filePath)).toString()
+    let fileContent
+    try {
+        fileContent = (await fs.readFile(filePath)).toString()
+    } catch (e) {
+        console.warn(e)
+        return [0, 0]
+    }
     const fileContentSplit = fileContent.split("\n")
     const regexpString = `${funcBeforeWords}${funcName}`.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&')
     const re = new RegExp(regexpString, "g")
@@ -23,7 +29,13 @@ async function getSymbolPosition(filePath: string, funcName: string, funcBeforeW
 }
 
 async function getFileContent(filePath: string, startRow: number) {
-    const originalFileContent = (await fs.readFile(filePath)).toString()
+    let originalFileContent
+    try {
+        originalFileContent = (await fs.readFile(filePath)).toString()
+    } catch (e) {
+        console.warn(e)
+        return ""
+    }
     const fileContentSplit = originalFileContent.split("\n")
     const fileContent = fileContentSplit.slice(startRow - 1)
     let fileResultArray = []

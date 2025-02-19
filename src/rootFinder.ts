@@ -82,7 +82,9 @@ export class RootFinder {
             while(matchResult = p.exec(fileContent)){
                 const beforeWords = matchResult[0].split(matchResult[1])[0]
                 if (matchResult[1]) {
-                    const lastFuncNameArray = matchResult[1].split(".")
+                    const lastFuncName1Array = matchResult[1].split(",")
+                    const lastFuncName1 = lastFuncName1Array[lastFuncName1Array.length - 1]
+                    const lastFuncNameArray = lastFuncName1.split(".")
                     const lastFuncName = lastFuncNameArray[lastFuncNameArray.length - 1]
                     const notLastFuncName = lastFuncNameArray.slice(0, -1)
                     if (cacheResult.find((r) => r === lastFuncName)) continue

@@ -73,12 +73,13 @@ function generateUuid() {
 }
 
 async function main() {
-    // const outputPath = "/Users/coffeecup/Desktop/Codes/vulnhuntr-go/note-go"
-    // const rootFile = "/Users/coffeecup/Documents/programming/Go/chinesenotes-go/cnweb.go"
-    // const rootPath = "/Users/coffeecup/Documents/programming/Go/chinesenotes-go"
-    const outputPath = "/Users/coffeecup/Desktop/Codes/vulnhuntr-go/65diary"
-    const rootFile = "/Users/coffeecup/Documents/work/65diary/backend/application.go"
-    const rootPath = "/Users/coffeecup/Documents/work/65diary/backend"
+    /*
+    npm run start -- -- /Users/coffeecup/Desktop/Codes/vulnhuntr-go/note-go /Users/coffeecup/Documents/programming/Go/chinesenotes-go/cnweb.go /Users/coffeecup/Documents/programming/Go/chinesenotes-go
+    */
+    const outputPath = process.argv[3]
+    const rootFile = process.argv[4]
+    const rootPath = process.argv[5]
+    console.log(`searching @${rootPath} from ${rootFile}. outputting @${outputPath}`)
     const rootFinder = new RootFinder(rootPath, rootFile)
     const rootFileContent = await rootFinder.getRootFileContent()
     await rootFinder.execRegex()
@@ -116,7 +117,7 @@ async function main() {
                 let codeDefinitions: string[] = []
                 let currentFile = filePath
                 let prevCurrentFiles: string[] = [filePath]
-                for (let i = 0; i < 10; i++) {
+                searchScope: for (let i = 0; i < 10; i++) {
                     if (i === 0) {
                         for (let ctx of firstReportJson.context_code) {
                             if (!Object.keys(storedCodeDefinition).includes(ctx.name)) {
@@ -129,6 +130,9 @@ async function main() {
                                 prevCurrentFiles.push(matchResult[0])
                                 if (matchResult[0] !== "" && matchResult[1] !== "") {
                                     storedCodeDefinition[ctx.name] = matchResult[1]
+                                } else {
+                                    console.warn("jump next iteration")
+                                    break searchScope
                                 }
                             }
                         }
@@ -138,7 +142,9 @@ async function main() {
                     // 2回目以降は、secondReportJsonに値が入る
                         for (let ctx of secondReportJson.context_code) {
                             if (!Object.keys(storedCodeDefinition).includes(ctx.name)) {
-                                const splitCtxName = ctx.name.split(".")
+                                const splitCtxName1Array = ctx.name.split(",")
+                                const splitCtxName1 = splitCtxName1Array[splitCtxName1Array.length - 1]
+                                const splitCtxName = splitCtxName1.split(".")
                                 const lastCtxName = splitCtxName[splitCtxName.length - 1]
                                 const beforeWords = ctx.code_line.split(lastCtxName)[0]
                                 console.log("searching ... ", ctx.name, lastCtxName, beforeWords)
@@ -159,6 +165,9 @@ async function main() {
                                 }
                                 if (matchResult[0] !== "" && matchResult[1] !== "") {
                                     storedCodeDefinition[ctx.name] = matchResult[1]
+                                } else {
+                                    console.warn("jump next iteration")
+                                    break searchScope
                                 }
                             }
                         }
@@ -188,8 +197,9 @@ async function main() {
                 }
                 console.log(">>>> final second report : ", secondReportJson)
                 const uuid = generateUuid()
+                const currentDate = new Date().toISOString().split(".")[0].replace(/:/, "_")
                 try {
-                    fs.writeFile(`${outputPath}/${uuid}.json`, JSON.stringify(secondReportJson))
+                    fs.writeFile(`${outputPath}/${currentDate}_${uuid}.json`, JSON.stringify(secondReportJson))
                 } catch(e) {
                     console.log(e)
                 }

@@ -41,11 +41,11 @@ git clone https://github.com/YmBIgo/vulnhuntr-go.git
 ```
 export CLAUDE_API_KEY=your-api-key
 ```
-5. Modify file paths in src/index.ts  
+5. Decide which file paths to output / search  
  `outputPath` for folder which you want report json to be outputted.  
  `rootFile` for file which define routing.  
  `rootPath` for folder which is root of your go project  
 6. Run the project
 ```
-npm run start
+npm run start -- -- <outputPath> <rootFile> <rootPath>
 ```
